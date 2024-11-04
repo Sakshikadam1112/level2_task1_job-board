@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Board</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background: #007bff;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            margin: 0;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px;
+        }
+        .job-listing {
+            background: #fff;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .job-title {
+            font-size: 1.5em;
+            margin: 0;
+        }
+        .job-description {
+            margin: 5px 0;
+        }
+        .search {
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px 0;
+            background: #007bff;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to the Job Board</h1>
+    </header>
+    <div class="container">
+        <div class="search">
+            <input type="text" id="search" placeholder="Search for jobs..." />
+        </div>
+        <div id="job-listings"></div>
+    </div>
+    <footer>
+        <p>Job Board &copy; 2024</p>
+    </footer>
+
+    <script>
+        const jobs = [
+            { id: 1, title: 'Software Engineer', company: 'Tech Corp', description: 'Develop software solutions.', location: 'Remote' },
+            { id: 2, title: 'Product Manager', company: 'Innovate LLC', description: 'Lead product development.', location: 'New York' },
+            { id: 3, title: 'Data Scientist', company: 'Data Minds', description: 'Analyze data and provide insights.', location: 'San Francisco' },
+            { id: 4, title: 'UI/UX Designer', company: 'Design Studio', description: 'Design user-friendly interfaces.', location: 'Los Angeles' },
+        ];
+
+        const jobListingsDiv = document.getElementById('job-listings');
+        const searchInput = document.getElementById('search');
+
+        function displayJobs(jobList) {
+            jobListingsDiv.innerHTML = '';
+            jobList.forEach(job => {
+                const jobDiv = document.createElement('div');
+                jobDiv.className = 'job-listing';
+                jobDiv.innerHTML = `
+                    <h3 class="job-title">${job.title}</h3>
+                    <p class="job-description">${job.description}</p>
+                    <p><strong>Company:</strong> ${job.company} | <strong>Location:</strong> ${job.location}</p>
+                    <button onclick="viewDetails(${job.id})">View Details</button>
+                `;
+                jobListingsDiv.appendChild(jobDiv);
+            });
+        }
+
+        function viewDetails(jobId) {
+            const job = jobs.find(j => j.id === jobId);
+            if (job) {
+                alert(`Job Title: ${job.title}\nDescription: ${job.description}\nCompany: ${job.company}\nLocation: ${job.location}`);
+            }
+        }
+
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const filteredJobs = jobs.filter(job => job.title.toLowerCase().includes(searchTerm));
+            displayJobs(filteredJobs);
+        });
+
+        displayJobs(jobs); // Initial display of jobs
+    </script>
+</body>
+</html>
